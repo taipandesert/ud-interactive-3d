@@ -1,0 +1,32 @@
+Syllabus
+Lesson 1: Introduction
+
+Motivation and a trip down the graphics pipeline, laying out the fundamental processes
+Lesson 2: Points, Vectors, and Meshes
+
+The basics of 3D geometry definition
+Lesson 3: Colors and Materials
+
+Color representation, material computations, transparency
+Lesson 4: Transforms
+
+Translation, scale, rotate and how to properly combine all these
+Lesson 5: Matrices
+
+Transform representation and how to fully control these
+Lesson 6: Lights
+
+Directional and point light sources
+Lesson 7: Cameras
+
+How the camera is defined
+Lesson 8: Textures and Reflections
+
+Color and opacity textures, along with reflection and normal mapping
+Lesson 9: Shader Programming
+
+An introduction to programming vertex and pixel shaders
+Lesson 10: Interaction and Animation
+
+How to select and make objects move
+
