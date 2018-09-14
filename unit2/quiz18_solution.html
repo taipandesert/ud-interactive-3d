@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Getting Started with Three.js</title>
+        <script type="text/javascript" src="../three.min.js"></script>
+        <!--<script type="text/javascript" src="../library/three.js-master/src/Three.js"></script>-->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    </head>
+    <body>
+        <div id="container" style="height: 492px, width: 876px"></div>
+        <script type="text/javascript" src ="../unit1/lib/Coordinates.js"></script>
+        <!--<script type="text/javascript" src="quiz13_square.js">-->
+        <script type="text/javascript">
+
+var camera, scene, renderer;
+var windowScale;
+
+function someObject (material) {
+	var geometry = new THREE.Geometry();
+
+	// Student: some data below must be fixed
+	// for both triangles to appear !
+	geometry.vertices.push( new THREE.Vector3( 3, 3, 0 ) );
+	geometry.vertices.push( new THREE.Vector3( 7, 3, 0 ) );
+	geometry.vertices.push( new THREE.Vector3( 7, 7, 0 ) );
+	geometry.vertices.push( new THREE.Vector3( 3, 7, 0 ) );
+
+	geometry.faces.push( new THREE.Face3( 0, 1, 2 ) );
+	//geometry.faces.push( new THREE.Face3( 2, 0, 3 ) );
+	geometry.faces.push( new THREE.Face3( 2, 3, 0 ) );
+	var mesh = new THREE.Mesh( geometry, material );
+
+	scene.add( mesh );
+    //return scene;
+    return geometry;
+}
+
+function init() {
+	//  Setting up some parameters
+	var canvasWidth = 846;
+	var canvasHeight = 494;
+	var canvasRatio = canvasWidth / canvasHeight;
+	// scene
+	scene = new THREE.Scene();
+
+	// Camera: Y up, X right, Z up
+	windowScale = 10;
+	var windowWidth = windowScale * canvasRatio;
+	var windowHeight = windowScale;
+
+	camera = new THREE.OrthographicCamera( windowWidth / - 2, windowWidth / 2,
+		windowHeight / 2, windowHeight / - 2, 0, 40 );
+
+	var focus = new THREE.Vector3( 5,4,0 );
+	camera.position.x = focus.x;
+	camera.position.y = focus.y;
+	camera.position.z = 10;
+	camera.lookAt( focus );
+
+	renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true});
+	renderer.gammaInput = true;
+	renderer.gammaOutput = true;
+    // With Retina or High Resolution
+    // Make sure your browser's screen is not zoomed
+    // Comment next line
+	//renderer.setSize( canvasWidth, canvasHeight );
+    // and uncomment next two:
+    var devicePixelRatio = window.devicePixelRatio || 1; // Evaluates to 2 if Retina
+    renderer.setSize( canvasWidth/devicePixelRatio, canvasHeight/devicePixelRatio);
+	//renderer.setSize( canvasWidth, canvasHeight );
+	//renderer.setClearColorHex( 0xffffff, 1.0 );
+	renderer.setClearColor( new THREE.Color( 0xffffff, 1.0 ) );
+
+}
+
+function addToDOM() {
+    var container = document.getElementById('container');
+    var canvas = container.getElementsByTagName('canvas');
+    if (canvas.length>0) {
+        container.removeChild(canvas[0]);
+    }
+    container.appendChild( renderer.domElement );
+}
+
+function showGrids() {
+	// Background grid and axes. Grid step size is 1, axes cross at 0, 0
+	Coordinates.drawGrid({size:100,scale:1,orientation:"z"});
+	Coordinates.drawAxes({axisLength:11,axisOrientation:"x",axisRadius:0.04});
+	Coordinates.drawAxes({axisLength:11,axisOrientation:"y",axisRadius:0.04});
+}
+
+function render() {
+	renderer.render( scene, camera );
+}
+
+
+// Main body of the script
+try {
+  init();
+  showGrids();
+  var material = new THREE.MeshBasicMaterial( { color: 0xF6831E, side: THREE.FrontSide } );
+  //var material = new THREE.MeshBasicMaterial( { color: 0xF6831E, side: THREE.DoubleSide } );
+  someObject(material);
+  addToDOM();
+  render();
+} catch(e) {
+    var errorReport = "Your program encountered an unrecoverable error, can not draw on canvas. Error was:<br/><br/>";
+    $('#container').append(errorReport+e);
+} 
+        </script>
+    </body>
+</html>
