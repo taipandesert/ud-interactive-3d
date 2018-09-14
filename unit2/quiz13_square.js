@@ -26,7 +26,13 @@ function drawSquare(x1, y1, x2, y2) {
 
 	var square = new THREE.Geometry();
 	// Your code goes here
-
+	square.vertices.push( new THREE.Vector3( x1, y1, 0 ) );
+	square.vertices.push( new THREE.Vector3( x2, y1, 0 ) );
+	square.vertices.push( new THREE.Vector3( x2, y2, 0 ) );
+	square.vertices.push( new THREE.Vector3( x1, y2, 0 ) );
+	
+	square.faces.push( new THREE.Face4( 0, 1, 2, 3 ) );
+    
 	// don't forget to return the geometry!	The following line is required!
 	return square;
 }
@@ -55,7 +61,13 @@ function init() {
 	renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true});
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
+    // With Retina or High Resolution 
+    // Make sure your browser's screen is not zoomed
+    // Comment next line
 	renderer.setSize( canvasWidth, canvasHeight );
+    // and uncomment next two:
+    // var devicePixelRatio = window.devicePixelRatio || 1; // Evaluates to 2 if Retina
+    // renderer.setSize( canvasWidth/devicePixelRatio, canvasHeight/devicePixelRatio);
 	renderer.setClearColorHex( 0xffffff, 1.0 );
 }
 function addToDOM() {
@@ -95,6 +107,4 @@ try {
     var errorReport = "Your program encountered an unrecoverable error, can not draw on canvas. Error was:<br/><br/>";
     $('#container').append(errorReport+e);
 }
-
-
 
